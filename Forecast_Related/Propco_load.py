@@ -30,7 +30,7 @@ for sheet in wb.sheets:
     ledger_other_rev = ['5990000'] * 12
     ledger_pro_fees = ['6900490'] * 12
     ledger_dep = ['7120000'] * 12
-    ledger_interest = ['9000000'] * 12
+    ledger_interest = ['7500000'] * 12
 
     # Concatenate ledger amounts with corresponding months
     ledgers = pd.Series(ledger_other_rev + ledger_pro_fees + ledger_dep + ledger_interest)
