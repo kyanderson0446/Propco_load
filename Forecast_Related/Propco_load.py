@@ -3,6 +3,13 @@ import xlwings as xw
 import pandas as pd
 from glob import glob
 
+
+print("Did you update the Entity list? ")
+print()
+print("Did you update the file path? ")
+
+
+
 # # Initialize an empty DataFrame to hold the stacked data
 master_df = pd.DataFrame()
 #
@@ -23,8 +30,8 @@ for sheet in wb.sheets:
     pro_fees = wb.sheets[sheet].range('O106:Z106').value
     dep = wb.sheets[sheet].range('O118:Z118').value
     interest = wb.sheets[sheet].range('O122:Z122').value
-    months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October',
-              'November', 'December']
+    months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct',
+              'Nov', 'Dec']
 
     # Define ledger amounts for each ledger
     ledger_other_rev = ['5990000'] * 12
