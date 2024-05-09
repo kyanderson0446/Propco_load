@@ -11,7 +11,7 @@ print("Did you update the file path? ")
 print("*"*12)
 year = int(input("Year?: "))
 
-path = fr"P:\PACS\Finance\Budgets\2024 Q2\2024 Q2 PropCo Forecasts\1-2024 Q2 PropCo Forecast Template v2.xlsx"
+path = fr"P:\Finance\Budgets\2024 Q2\2024 Q2 PropCo Forecasts\1-2024 Q2 PropCo Forecast Template v2.xlsx"
 
 
 #######################################################################
@@ -25,6 +25,7 @@ entity_df = pd.read_excel(path, sheet_name='Entity_Name')
 
 wb = xw.Book(path)
 xw.App(visible=False)
+app = xw.apps.active
 
 # Extract data
 for sheet in wb.sheets:
@@ -35,6 +36,8 @@ for sheet in wb.sheets:
     other_rev = wb.sheets[sheet].range('O18:Z18').value
     pro_fees = wb.sheets[sheet].range('O106:Z106').value
     dep = wb.sheets[sheet].range('O118:Z118').value
+    tax = wb.sheets[sheet].range('O120:Z120').value
+    insurance = wb.sheets[sheet].range('O121:Z121').value
     interest = wb.sheets[sheet].range('O122:Z122').value
     months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct',
               'Nov', 'Dec']
@@ -44,17 +47,19 @@ for sheet in wb.sheets:
     ledger_other_rev = ['5990000'] * 12
     ledger_pro_fees = ['6900490'] * 12 # _ADM
     ledger_dep = ['7120000'] * 12 # _PROP
+    ledger_tax = ['7300000'] * 12 #_PROP
+    ledger_ins = ['7400000'] * 12 #_PROP
     ledger_interest = ['7500000'] * 12 #_NONOP
 
     # Concatenate ledger amounts with corresponding months
-    ledgers = pd.Series(ledger_other_rev + ledger_pro_fees + ledger_dep + ledger_interest)
+    ledgers = pd.Series(ledger_other_rev + ledger_pro_fees + ledger_dep + ledger_tax + ledger_ins + ledger_interest)
 
     # Create a DataFrame with the combined data
     df = pd.DataFrame({
         'Sheet': name,
         'Ledger': ledgers,
-        'Month': months * 4,  # Repeat the months for each set of amounts
-        'Amount': other_rev + pro_fees + dep + interest  # Concatenate all amounts
+        'Month': months * 6,  # Repeat the months for each set of amounts
+        'Amount': other_rev + pro_fees + dep + tax + insurance + interest  # Concatenate all amounts
     })
 
 
@@ -77,6 +82,8 @@ master_df.dropna(subset=['Entity Name'], inplace=True)
 ledger_mapping = {
     '6900490': '_ADM',
     '7120000': '_PROP',
+    '7300000': '_PROP',
+    '7400000': '_PROP',
     '7500000': '_NONOP'
 }
 
@@ -108,11 +115,14 @@ master_df = master_df[order_col]
 wb.close()
 master_df.to_excel("propco_data.xlsx", index=False)
 
+
 wb_m = xw.Book("propco_data.xlsx")
+
+
 values = wb_m.sheets[0].range('A2:M9999').value
 
 # EIB file
-eib_temp = fr"WD_upload_budget_main.xlsx"
+eib_temp = fr"Virtual Machin Upload WD_upload_budget_main.xlsx"
 try:
     with open(eib_temp, 'r') as file:
         # If the file exists, proceed with your operations
