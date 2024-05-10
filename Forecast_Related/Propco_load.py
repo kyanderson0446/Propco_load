@@ -103,10 +103,10 @@ master_df['Amount'] = pd.to_numeric(master_df['Amount'], errors='coerce')
 master_df['Debit'] = master_df['Amount'].where(master_df['Ledger'] > 5990000, master_df['Debit'])
 master_df.loc[master_df['Ledger'] > 5990000, 'Amount'] = 0.0
 master_df['Index0'] = ""
-master_df['Index1'] = ""
-master_df['Index2'] = 1
+master_df['Index1'] = 1
 last_row_index = len(master_df)
-master_df['Index3'] = range(1, last_row_index + 1)
+master_df['Index2'] = range(1, last_row_index + 1)
+master_df['Index3'] = ""
 master_df['Index6'] = ""
 
 # Prep for xlsx eib
