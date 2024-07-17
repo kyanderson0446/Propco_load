@@ -11,17 +11,36 @@ print("Did you update the file path? ")
 print("*"*12)
 year = int(input("Year?: "))
 
+# File path
 path = fr"P:\Finance\Budgets\2024 Q2\2024 Q2 PropCo Forecasts\1-2024 Q2 PropCo Forecast Template v2.xlsx"
 
+# EIB file
+eib_temp = fr"Virtual Machine Upload WD_upload_budget_main.xlsx"
 
 #######################################################################
 #######################################################################
 # Initialize an empty DataFrame to hold the stacked data
 master_df = pd.DataFrame()
 
+while True:
+    # File path
+    path = input("Enter the file path: ")
 
-# Read the "entity name" sheet into a DataFrame
-entity_df = pd.read_excel(path, sheet_name='Entity_Name')
+    if '\\PACS' in path or '\PACS' in path:
+        print(r"Remove \PACS or \\PACS from the file path")
+        continue
+
+    # Check if the file exists
+    if os.path.exists(path):
+        try:
+            # Read the "entity name" sheet into a DataFrame
+            entity_df = pd.read_excel(path, sheet_name='Entity_Name')
+            break
+        except Exception as e:
+            print(f"Failed to read the Excel file: {e}")
+    else:
+        print("File path does not exist. Please check and try again.")
+
 
 wb = xw.Book(path)
 xw.App(visible=False)
@@ -121,8 +140,7 @@ wb_m = xw.Book("propco_data.xlsx")
 
 values = wb_m.sheets[0].range('A2:M9999').value
 
-# EIB file
-eib_temp = fr"Virtual Machin Upload WD_upload_budget_main.xlsx"
+
 try:
     with open(eib_temp, 'r') as file:
         # If the file exists, proceed with your operations
