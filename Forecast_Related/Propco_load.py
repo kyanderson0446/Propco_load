@@ -58,6 +58,7 @@ for sheet in wb.sheets:
     tax = wb.sheets[sheet].range('O120:Z120').value
     insurance = wb.sheets[sheet].range('O121:Z121').value
     interest = wb.sheets[sheet].range('O122:Z122').value
+    non_op_rev = wb.sheets[sheet].range('O142:Z142').value
     months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct',
               'Nov', 'Dec']
 
@@ -69,16 +70,17 @@ for sheet in wb.sheets:
     ledger_tax = ['7300000'] * 12 #_PROP
     ledger_ins = ['7400000'] * 12 #_PROP
     ledger_interest = ['7500000'] * 12 #_NONOP
+    non_op = ['9000000'] * 12 #_NONOP
 
     # Concatenate ledger amounts with corresponding months
-    ledgers = pd.Series(ledger_other_rev + ledger_pro_fees + ledger_dep + ledger_tax + ledger_ins + ledger_interest)
+    ledgers = pd.Series(ledger_other_rev + ledger_pro_fees + ledger_dep + ledger_tax + ledger_ins + ledger_interest + non_op)
 
     # Create a DataFrame with the combined data
     df = pd.DataFrame({
         'Sheet': name,
         'Ledger': ledgers,
         'Month': months * 6,  # Repeat the months for each set of amounts
-        'Amount': other_rev + pro_fees + dep + tax + insurance + interest  # Concatenate all amounts
+        'Amount': other_rev + pro_fees + dep + tax + insurance + interest + non_op_rev # Concatenate all amounts
     })
 
 
@@ -103,7 +105,8 @@ ledger_mapping = {
     '7120000': '_PROP',
     '7300000': '_PROP',
     '7400000': '_PROP',
-    '7500000': '_NONOP'
+    '7500000': '_NONOP',
+    '9000000': '_NONOP'
 }
 
 
