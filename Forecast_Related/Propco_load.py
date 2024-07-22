@@ -12,7 +12,7 @@ print("*"*12)
 year = int(input("Year?: "))
 
 # File path
-path = fr"P:\Finance\Budgets\2024 Q2\2024 Q2 PropCo Forecasts\1-2024 Q2 PropCo Forecast Template v2.xlsx"
+path = fr"P:\PACS\Finance\Budgets\2024 Q3\2024 Q3 PropCo Forecasts\1-2024 Q3 PropCo Forecast Template v2.xlsx"
 
 # EIB file
 eib_temp = fr"Virtual Machine Upload WD_upload_budget_main.xlsx"
@@ -22,24 +22,23 @@ eib_temp = fr"Virtual Machine Upload WD_upload_budget_main.xlsx"
 # Initialize an empty DataFrame to hold the stacked data
 master_df = pd.DataFrame()
 
-while True:
-    # File path
-    path = input("Enter the file path: ")
+# while True:
+#     # File path
+#     path = input("Enter the file path: ")
 
-    if '\\PACS' in path or '\PACS' in path:
-        print(r"Remove \PACS or \\PACS from the file path")
-        continue
+if '\\PACS' in path or '\PACS' in path:
+    print(r"Remove \PACS or \\PACS from the file path")
 
-    # Check if the file exists
-    if os.path.exists(path):
-        try:
-            # Read the "entity name" sheet into a DataFrame
-            entity_df = pd.read_excel(path, sheet_name='Entity_Name')
-            break
-        except Exception as e:
-            print(f"Failed to read the Excel file: {e}")
-    else:
-        print("File path does not exist. Please check and try again.")
+
+# Check if the file exists
+if os.path.exists(path):
+    try:
+        # Read the "entity name" sheet into a DataFrame
+        entity_df = pd.read_excel(path, sheet_name='Entity_Name')
+    except Exception as e:
+        print(f"Failed to read the Excel file: {e}")
+else:
+    print("File path does not exist. Please check and try again.")
 
 
 wb = xw.Book(path)
@@ -70,16 +69,16 @@ for sheet in wb.sheets:
     ledger_tax = ['7300000'] * 12 #_PROP
     ledger_ins = ['7400000'] * 12 #_PROP
     ledger_interest = ['7500000'] * 12 #_NONOP
-    non_op = ['9000000'] * 12 #_NONOP
+    ledger_non_op = ['9000000'] * 12 #_NONOP
 
     # Concatenate ledger amounts with corresponding months
-    ledgers = pd.Series(ledger_other_rev + ledger_pro_fees + ledger_dep + ledger_tax + ledger_ins + ledger_interest + non_op)
+    ledgers = pd.Series(ledger_other_rev + ledger_pro_fees + ledger_dep + ledger_tax + ledger_ins + ledger_interest + ledger_non_op)
 
     # Create a DataFrame with the combined data
     df = pd.DataFrame({
         'Sheet': name,
         'Ledger': ledgers,
-        'Month': months * 6,  # Repeat the months for each set of amounts
+        'Month': months * 7,  # Repeat the months for each set of amounts
         'Amount': other_rev + pro_fees + dep + tax + insurance + interest + non_op_rev # Concatenate all amounts
     })
 
