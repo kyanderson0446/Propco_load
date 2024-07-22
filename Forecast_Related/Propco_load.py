@@ -13,6 +13,7 @@ year = int(input("Year?: "))
 
 # File path
 path = fr"P:\PACS\Finance\Budgets\2024 Q3\2024 Q3 PropCo Forecasts\1-2024 Q3 PropCo Forecast Template v2.xlsx"
+new_path = directory_path = os.path.dirname(path)
 
 # EIB file
 eib_temp = fr"Virtual Machine Upload WD_upload_budget_main.xlsx"
@@ -51,13 +52,13 @@ for sheet in wb.sheets:
     # Read data range from Excel
     name = sheet.name
 
-    other_rev = wb.sheets[sheet].range('P18:AA18').value
-    pro_fees = wb.sheets[sheet].range('P106:AA106').value
-    dep = wb.sheets[sheet].range('P118:AA118').value
-    tax = wb.sheets[sheet].range('P120:AA120').value
-    insurance = wb.sheets[sheet].range('P121:AA121').value
-    interest = wb.sheets[sheet].range('P122:AA122').value
-    non_op_rev = wb.sheets[sheet].range('P142:AA142').value
+    other_rev = wb.sheets[sheet].range('O18:Z18').value
+    pro_fees = wb.sheets[sheet].range('O106:Z106').value
+    dep = wb.sheets[sheet].range('O118:Z118').value
+    tax = wb.sheets[sheet].range('O120:Z120').value
+    insurance = wb.sheets[sheet].range('O121:Z121').value
+    interest = wb.sheets[sheet].range('O122:Z122').value
+    non_op_rev = wb.sheets[sheet].range('O142:Z142').value
     months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct',
               'Nov', 'Dec']
 
@@ -156,6 +157,6 @@ except FileNotFoundError:
 wb_e = xw.Book(eib_temp)
 sheet = wb_e.sheets['Budget Lines Data']
 sheet.range('A6').value = values  # Assuming you want to start from cell A6
-wb_e.save(fr"Propco_{year}_eib.xlsx")
+wb_e.save(fr"{new_path}\Propco_{year}_eib.xlsx")
 
 wb_e.close()
