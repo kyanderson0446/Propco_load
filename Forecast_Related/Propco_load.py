@@ -52,13 +52,13 @@ for sheet in wb.sheets:
     # Read data range from Excel
     name = sheet.name
 
-    other_rev = wb.sheets[sheet].range('O18:Z18').value
-    pro_fees = wb.sheets[sheet].range('O106:Z106').value
-    dep = wb.sheets[sheet].range('O118:Z118').value
-    tax = wb.sheets[sheet].range('O120:Z120').value
-    insurance = wb.sheets[sheet].range('O121:Z121').value
-    interest = wb.sheets[sheet].range('O122:Z122').value
-    non_op_rev = wb.sheets[sheet].range('O142:Z142').value
+    other_rev = wb.sheets[sheet].range('P18:AA18').value
+    pro_fees = wb.sheets[sheet].range('P106:AA106').value
+    dep = wb.sheets[sheet].range('P118:AA118').value
+    tax = wb.sheets[sheet].range('P120:AA120').value
+    insurance = wb.sheets[sheet].range('P121:AA121').value
+    interest = wb.sheets[sheet].range('P122:AA122').value
+    non_op_rev = wb.sheets[sheet].range('P142:AA142').value
     months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct',
               'Nov', 'Dec']
 
