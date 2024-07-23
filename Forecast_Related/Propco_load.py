@@ -109,7 +109,6 @@ ledger_mapping = {
     '9000000': '_NONOP'
 }
 
-
 # Section for adding and revising columns
 master_df['Cost_Center'] = master_df['Ledger'].map(ledger_mapping)
 master_df['Cost_Center'] = master_df['Prop_id'] + master_df['Cost_Center']
@@ -130,6 +129,11 @@ last_row_index = len(master_df)
 master_df['Index2'] = range(1, last_row_index + 1)
 master_df['Index3'] = ""
 master_df['Index6'] = ""
+# Convert values
+master_df['Debit'] = pd.to_numeric(master_df['Debit'], errors='coerce').fillna(0)
+master_df['Credit'] = pd.to_numeric(master_df['Credit'], errors='coerce').fillna(0)
+master_df['Debit'] = master_df['Debit'].astype(int)
+master_df['Credit'] = master_df['Credit'].astype(int)
 
 # Prep for xlsx eib
 order_col = ['Index0', 'Index1', 'Index2', 'Index3', 'Entity Name', 'Year', 'Month', 'Ledger', 'Account Set', 'Debit', 'Amount', 'Index6', 'Cost_Center']
@@ -137,12 +141,9 @@ master_df = master_df[order_col]
 wb.close()
 master_df.to_excel("propco_data.xlsx", index=False)
 
-
 wb_m = xw.Book("propco_data.xlsx")
 
-
 values = wb_m.sheets[0].range('A2:M9999').value
-
 
 try:
     with open(eib_temp, 'r') as file:
