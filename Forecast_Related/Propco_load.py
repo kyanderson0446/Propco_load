@@ -12,7 +12,7 @@ print("*"*12)
 year = int(input("Year?: "))
 
 # File path
-path = fr"P:\PACS\Finance\Budgets\2024 Q3\2024 Q3 PropCo Forecasts\1-2024 Q3 PropCo Forecast Template v2.xlsx"
+path = fr""
 new_path = directory_path = os.path.dirname(path)
 
 # EIB file
